@@ -144,3 +144,16 @@ username (e.g. `pi`, `wifipi`, whatever you set in Raspberry Pi Imager).
     sudo systemctl start depot.service
     sudo chown -R YOUR_USER:YOUR_USER ~/depot
     ```
+
+### Optional: set a friendly hostname
+
+By default the Pi is reachable at `http://raspberrypi.local`. To use
+`http://depot.local` instead:
+
+```bash
+sudo raspi-config
+```
+
+Go to **System Options → Hostname**, set it to `depot`, then reboot. Any device
+on the same network can now reach Depot at `http://depot.local` — no DNS setup
+required.
