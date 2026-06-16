@@ -12,7 +12,7 @@ USB Tool but always-on and self-serve.
 ## What it does
 
 - Caches files listed in `files.json` (added by URL, uploaded, or bulk-loaded
-  from Jamie Sinn's CSA-USB-Tool season list, which Depot auto-tags by vendor).
+  from [Jamie Sinn's CSA-USB-Tool](https://github.com/JamieSinn/CSA-USB-Tool) season list, which Depot auto-tags by vendor).
 - Serves a public page where teams browse (grouped/sorted/searchable by tag),
   download cached files, or trigger an on-demand "Cache & Download".
 - Provides a Cache Management page (open) and a password-lockable System page.
