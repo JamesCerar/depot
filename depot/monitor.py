@@ -1,8 +1,7 @@
 """Background workers: internet monitor and the git update checker.
 
-The LED/relay indicator lives in a separate app; Depot only needs to
-know whether the internet is reachable so it can gate cache downloads and show
-an online/offline status in the UI.
+Checks whether the internet is reachable so the app can gate cache downloads
+and show an online/offline status in the UI.
 """
 
 from __future__ import annotations

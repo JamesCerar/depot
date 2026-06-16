@@ -9,9 +9,6 @@ large files (FRC software, game manuals, vendor libraries, etc.) onto a box so
 teams can grab them over the venue network without internet, much like the CSA
 USB Tool but always-on and self-serve.
 
-> Internet-status LED indication lives in a separate app so the indicator keeps
-> working independently of this web app.
-
 ## What it does
 
 - Caches files listed in `files.json` (added by URL, uploaded, or bulk-loaded
@@ -80,12 +77,6 @@ These steps use `YOUR_USER` as a placeholder — replace it with your actual Pi
 username (e.g. `pi`, `wifipi`, whatever you set in Raspberry Pi Imager).
 
  1. Log in (via SSH or keyboard + monitor).
-
-    > **Tip:** if your keyboard layout is wrong, fix it first:
-    > ```bash
-    > sudo raspi-config
-    > ```
-    > Go to **Localisation Options → Keyboard** and pick your layout.
 
  2. Install dependencies and clone:
     ```bash
