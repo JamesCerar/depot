@@ -1,0 +1,9 @@
+services:
+  depot:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - ./cache:/app/cache
+      - ./files.json:/app/files.json
+    restart: unless-stopped

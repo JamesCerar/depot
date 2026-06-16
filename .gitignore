@@ -5,7 +5,7 @@ __pycache__/
 venv/
 *.egg-info/
 
-# wifipi runtime / local state
+# runtime / local state
 config.toml
 system_id.txt
 cache/*

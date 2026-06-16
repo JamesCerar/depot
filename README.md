@@ -53,6 +53,31 @@ the file). Common knobs:
 | `[admin] password` | *(unset)* | Blank = System page open; set to require login |
 | `[cache] verify_ssl` | `false` | Many FRC mirrors have broken certs |
 
+## Run with Docker
+
+The easiest way to run Depot on a PC (Windows, Mac, or Linux).
+
+First, create an empty `files.json` if you don't have one:
+
+```bash
+echo "[]" > files.json
+```
+
+Then build and start:
+
+```bash
+docker compose up -d
+```
+
+Open `http://localhost`. The `cache/` folder and `files.json` are mounted from
+the current directory so data persists between container restarts.
+
+To stop:
+
+```bash
+docker compose down
+```
+
 ## Development
 
 Run it on a laptop:
