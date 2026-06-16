@@ -2,10 +2,11 @@
 # Started by systemd (depot.service). Pulls the latest code, then runs the app.
 set -u
 
-cd /home/depot/depot || exit 1
+DEPOT_DIR="$(dirname "$(readlink -f "$0")")"
+cd "$DEPOT_DIR" || exit 1
 
-# Avoid git "dubious ownership" errors when systemd runs us as root.
-git config --global --add safe.directory /home/depot/depot
+# Avoid git "dubious ownership" errors when systemd runs as root.
+git config --global --add safe.directory "$DEPOT_DIR"
 
 echo "--- LAUNCHER: checking for git updates ---"
 git pull origin main || echo "LAUNCHER: git pull failed; starting with local code"

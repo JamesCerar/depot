@@ -76,12 +76,33 @@ Run the tests:
 
 ## Install on the Raspberry Pi
 
- 1. SSH into the box (user `depot`).
- 2. Clone and set up:
+These steps use `YOUR_USER` as a placeholder — replace it with your actual Pi
+username (e.g. `pi`, `wifipi`, whatever you set in Raspberry Pi Imager).
+
+ 1. Log in (via SSH or keyboard + monitor).
+
+    > **Tip:** if your keyboard layout is wrong, fix it first:
+    > ```bash
+    > sudo raspi-config
+    > ```
+    > Go to **Localisation Options → Keyboard** and pick your layout.
+
+ 2. Install dependencies and clone:
     ```bash
     sudo apt-get update && sudo apt install -y git python3-venv
-    git clone git@github.com:JamesCerar/depot.git
+    cd ~
+    git clone https://github.com/JamesCerar/depot.git
     cd depot
+    ```
+
+    > If you get a permission denied error on the next steps, the folder was
+    > likely cloned as root. Fix it with:
+    > ```bash
+    > sudo chown -R YOUR_USER:YOUR_USER ~/depot
+    > ```
+
+ 3. Set up the Python environment:
+    ```bash
     python3 -m venv .venv
     source .venv/bin/activate
     pip install --upgrade pip
@@ -89,12 +110,17 @@ Run the tests:
     deactivate
     chmod +x launcher.sh
     ```
- 3. (Optional) set an admin password:
+
+ 4. (Optional) set an admin password:
     ```bash
     cp config.example.toml config.toml
     nano config.toml   # uncomment and set [admin] password
     ```
- 4. Create the service `sudo nano /etc/systemd/system/depot.service`:
+
+ 5. Create the service — replace `YOUR_USER` with your username:
+    ```bash
+    sudo nano /etc/systemd/system/depot.service
+    ```
     ```ini
     [Unit]
     Description=Depot file cache
@@ -103,17 +129,18 @@ Run the tests:
     [Service]
     User=root
     Group=root
-    WorkingDirectory=/home/depot/depot
-    ExecStart=/bin/bash /home/depot/depot/launcher.sh
+    WorkingDirectory=/home/YOUR_USER/depot
+    ExecStart=/bin/bash /home/YOUR_USER/depot/launcher.sh
     Restart=always
     RestartSec=5
 
     [Install]
     WantedBy=multi-user.target
     ```
- 5. Enable and start:
+
+ 6. Enable and start:
     ```bash
     sudo systemctl enable depot.service
     sudo systemctl start depot.service
-    sudo chown -R depot:depot /home/depot/depot
+    sudo chown -R YOUR_USER:YOUR_USER ~/depot
     ```
