@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block title %}Depot — FRC File Downloads Cache{% endblock %}
+{% block brand_subtitle %}<span id="secret" class="secret">F</span>RC File Downloads Cache{% endblock %}
+
+{% block content %}
+  {% if total %}
+  <div class="controls">
+    <input type="search" id="filter" placeholder="Search {{ total }} files…" autocomplete="off">
+    <label class="control">Group
+      <select id="groupBy">
+        <option value="tag">By tag</option>
+        <option value="status">By status</option>
+        <option value="none">None</option>
+      </select>
+    </label>
+    <label class="control">Sort
+      <select id="sortBy">
+        <option value="name-asc">Name A–Z</option>
+        <option value="name-desc">Name Z–A</option>
+        <option value="size-desc">Size</option>
+        <option value="added-desc">Recently added</option>
+      </select>
+    </label>
+  </div>
+  {% endif %}
+
+  <div id="list">
+    {% for file in files %}
+    <div class="card"
+         data-name="{{ file.name|lower }}"
+         data-tags="{{ file.tags|join('|') }}"
+         data-cached="{{ '1' if file.cached else '0' }}"
+         data-size="{{ file.size_bytes if file.size_bytes else '' }}"
+         data-added="{{ file.added }}"
+         data-search="{{ (file.name ~ ' ' ~ file.description ~ ' ' ~ file.filename ~ ' ' ~ file.tags|join(' '))|lower }}">
+      <div class="card-content">
+        <h2>{{ file.name }}</h2>
+        {% if file.description %}<p>{{ file.description }}</p>{% endif %}
+        <div class="filename">{{ file.filename }}{% if file.size_label %} · {{ file.size_label }}{% endif %}</div>
+        {% if file.tags %}
+        <div class="chips">{% for tag in file.tags %}<span class="chip">{{ tag }}</span>{% endfor %}</div>
+        {% endif %}
+      </div>
+      <div class="card-action">
+        {% if file.cached %}
+          <a href="{{ url_for('public.download', filename=file.filename) }}" class="btn">Download</a>
+        {% elif state.internet_connected %}
+          <form method="POST" action="{{ url_for('public.cache_and_download', index=file.index) }}" style="margin:0;">
+            <button type="submit" class="btn btn-amber">Cache &amp; Download</button>
+          </form>
+        {% else %}
+          <span class="badge badge-err">Not cached</span>
+        {% endif %}
+      </div>
+    </div>
+    {% else %}
+    <div class="card"><div class="card-content"><p>No files are available yet.</p></div></div>
+    {% endfor %}
+  </div>
+
+  <p id="no-results" class="empty" style="display:none;">No files match your search.</p>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const list = document.getElementById('list');
+  const filter = document.getElementById('filter');
+  if (filter) {
+    const master = Array.from(list.querySelectorAll('.card[data-name]'));
+    const groupSel = document.getElementById('groupBy');
+    const sortSel = document.getElementById('sortBy');
+    const noResults = document.getElementById('no-results');
+    const ORDER = {{ category_order|tojson }};
+
+    // restore saved preferences
+    groupSel.value = localStorage.getItem('depot.group') || 'tag';
+    sortSel.value = localStorage.getItem('depot.sort') || 'name-asc';
+
+    const num = (v) => (v === '' ? -Infinity : Number(v));
+    const sorters = {
+      'name-asc':  (a, b) => a.dataset.name.localeCompare(b.dataset.name),
+      'name-desc': (a, b) => b.dataset.name.localeCompare(a.dataset.name),
+      'size-desc': (a, b) => num(b.dataset.size) - num(a.dataset.size),
+      'added-desc':(a, b) => num(b.dataset.added) - num(a.dataset.added),
+    };
+
+    function sectionEl(label, count) {
+      const sec = document.createElement('section');
+      sec.className = 'cat';
+      const h = document.createElement('h2');
+      h.className = 'cat-header';
+      h.innerHTML = label + ' <span class="cat-count">' + count + '</span>';
+      sec.appendChild(h);
+      return sec;
+    }
+
+    function buckets(cards, group) {
+      if (group === 'tag') {
+        const map = new Map();
+        cards.forEach(c => (c.dataset.tags ? c.dataset.tags.split('|') : ['Other'])
+          .forEach(t => { (map.get(t) || map.set(t, []).get(t)).push(c); }));
+        const labels = Array.from(map.keys()).sort((a, b) => {
+          const ia = ORDER.indexOf(a), ib = ORDER.indexOf(b);
+          return (ia < 0 ? 1e9 : ia) - (ib < 0 ? 1e9 : ib) || a.localeCompare(b);
+        });
+        return labels.map(l => [l, map.get(l), true]);   // clone (shared cards)
+      }
+      if (group === 'status') {
+        const ready = cards.filter(c => c.dataset.cached === '1');
+        const not = cards.filter(c => c.dataset.cached !== '1');
+        const out = [];
+        if (ready.length) out.push(['Ready to download', ready, false]);
+        if (not.length) out.push(['Needs caching', not, false]);
+        return out;
+      }
+      return [[null, cards, false]];
+    }
+
+    function render() {
+      const group = groupSel.value, sort = sortSel.value;
+      const q = filter.value.trim().toLowerCase();
+      localStorage.setItem('depot.group', group);
+      localStorage.setItem('depot.sort', sort);
+
+      const sorted = master.slice().sort(sorters[sort] || (() => 0));
+      list.innerHTML = '';
+      let anyVisible = false;
+
+      buckets(sorted, group).forEach(([label, cards, clone]) => {
+        const visible = cards.filter(c => !q || c.dataset.search.includes(q));
+        if (!visible.length) return;
+        anyVisible = true;
+        const target = label === null ? list : sectionEl(label, visible.length);
+        visible.forEach(c => target.appendChild(clone ? c.cloneNode(true) : c));
+        if (label !== null) list.appendChild(target);
+      });
+
+      noResults.style.display = anyVisible ? 'none' : '';
+    }
+
+    [groupSel, sortSel].forEach(el => el.addEventListener('change', render));
+    filter.addEventListener('input', render);
+    render();
+  }
+
+  // Hold the "F" for one second to reveal the admin link (kept from v1).
+  const secret = document.getElementById('secret');
+  let timer, active = false;
+  secret.addEventListener('mouseenter', () => {
+    timer = setTimeout(() => { active = true; secret.classList.add('active'); }, 1000);
+  });
+  secret.addEventListener('mouseleave', () => {
+    clearTimeout(timer); active = false; secret.classList.remove('active');
+  });
+  secret.addEventListener('click', () => { if (active) window.location.href = "{{ url_for('admin.dashboard') }}"; });
+</script>
+{% endblock %}

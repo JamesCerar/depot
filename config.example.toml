@@ -1,0 +1,22 @@
+# Depot configuration. Copy to config.toml and edit as needed.
+# Every value is optional — anything omitted uses the built-in default.
+# Each setting can also be overridden by a DEPOT_<KEY> environment variable
+# (e.g. DEPOT_ADMIN_PASSWORD, DEPOT_PORT).
+
+[server]
+host = "0.0.0.0"
+port = 80
+# secret_key = ""   # used to sign admin sessions; blank = random key per boot
+
+[cache]
+sync_interval = 60    # seconds between cache sync passes
+check_interval = 10   # seconds between internet checks
+csa_tools_url = "https://raw.githubusercontent.com/JamieSinn/CSA-USB-Tool/main/Lists/FRC2026.json"
+internet_check_url = "http://1.1.1.1"
+internet_check_retries = 10
+verify_ssl = false    # many FRC download mirrors have broken certs
+
+[admin]
+# Leave password blank/unset to keep the System page open (no login).
+# Set a value to require a password to reach /admin/system.
+# password = "change-me"

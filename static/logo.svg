@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 136" role="img" aria-label="Depot">
+  <g transform="translate(-250,-14)">
+    <g stroke="#00396b" stroke-width="1.2" stroke-linejoin="round">
+      <polygon points="260,84 300,104 300,138 260,118" fill="#0066B3"/>
+      <polygon points="340,84 300,104 300,138 340,118" fill="#0066B3"/>
+      <polygon points="300,64 340,84 300,104 260,84" fill="#2a92dd"/>
+      <polygon points="340,84 380,104 380,138 340,118" fill="#0066B3"/>
+      <polygon points="420,84 380,104 380,138 420,118" fill="#0066B3"/>
+      <polygon points="380,64 420,84 380,104 340,84" fill="#2a92dd"/>
+    </g>
+    <g stroke-width="1.5" stroke-linecap="round" stroke="#00497f">
+      <line x1="260" y1="101" x2="300" y2="121"/>
+      <line x1="340" y1="101" x2="300" y2="121"/>
+      <line x1="420" y1="101" x2="380" y2="121"/>
+      <line x1="340" y1="101" x2="380" y2="121"/>
+    </g>
+    <g stroke="#8a1016" stroke-width="1.2" stroke-linejoin="round">
+      <polygon points="300,46 340,66 340,100 300,80" fill="#ED1C24"/>
+      <polygon points="380,46 340,66 340,100 380,80" fill="#ED1C24"/>
+      <polygon points="340,26 380,46 340,66 300,46" fill="#f5565d"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Depot{% endblock %}</title>
+  <link rel="icon" href="{{ url_for('static', filename='logo.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <a class="brand-logo" href="{{ url_for('public.index') }}">
+        <img src="{{ url_for('static', filename='logo.svg') }}" alt="Depot" style="height:40px;">
+      </a>
+      <span>
+        <div class="title">{% block brand_title %}Depot{% endblock %}</div>
+        <div class="subtitle">{% block brand_subtitle %}{{ system_id }}{% endblock %}</div>
+      </span>
+    </div>
+    <div class="header-right">
+      {% if state %}
+      <span class="status-dot {{ 'online' if state.internet_connected else 'offline' }}">
+        {{ 'Online' if state.internet_connected else 'Offline' }}
+      </span>
+      {% endif %}
+      {% block header_extra %}{% endblock %}
+    </div>
+  </header>
+
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <ul class="flashes">
+        {% for category, message in messages %}
+        <li class="flash {{ category }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 FIRST Robotics Canada</p>
+    <p>System: <strong>{{ system_id }}</strong></p>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

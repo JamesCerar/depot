@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block title %}Cache Management — {{ system_id }}{% endblock %}
+{% block brand_title %}Depot Cache{% endblock %}
+
+{% block header_extra %}
+  <a class="btn btn-ghost btn-sm" href="{{ url_for('admin.system') }}">⚙ System</a>
+{% endblock %}
+
+{% block content %}
+  <div class="page-head">
+    <a class="back-link" href="{{ url_for('public.index') }}">&larr;</a>
+    <h1>Cache Management</h1>
+  </div>
+
+  {# ---------- storage ---------- #}
+  <div class="panel accent-info">
+    <h2>Storage</h2>
+    <div class="storage-bar">
+      <span style="width: {{ disk.percent }}%; background: {{ '#ed1c24' if disk.percent > 90 else '#2b9348' }};">
+        {{ disk.percent }}% used
+      </span>
+    </div>
+    <p class="hint" style="margin:0;"><strong>{{ disk.free }} GB</strong> free of {{ disk.total }} GB</p>
+  </div>
+
+  {# ---------- orphan cleanup ---------- #}
+  {% if orphans %}
+  <div class="panel accent-danger">
+    <h2>Cleanup recommended</h2>
+    <p class="hint">
+      Found <strong>{{ orphans|length }}</strong> file(s) on the SD card that are not in your list:
+      <br><span class="sub">{{ orphans|join(', ') }}</span>
+    </p>
+    <form method="POST" action="{{ url_for('admin.cleanup') }}"
+          onsubmit="return confirm('Permanently delete {{ orphans|length }} unused file(s)?');">
+      <button type="submit" class="btn btn-red">Delete unused files</button>
+    </form>
+  </div>
+  {% endif %}
+
+  {# ---------- file cache ---------- #}
+  <div class="panel">
+    <h2>File cache <span class="meta">Last sync: {{ state.last_sync }}</span></h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>File</th>
+          <th class="hide-sm">Size</th>
+          <th>Status</th>
+          <th class="actions">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in state.cache_log %}
+        <tr data-filename="{{ item.filename }}">
+          <td>
+            {{ item.name }}<div class="sub">{{ item.filename }}</div>
+            {% if item.tags %}<div class="chips">{% for tag in item.tags %}<span class="chip">{{ tag }}</span>{% endfor %}</div>{% endif %}
+          </td>
+          <td class="num hide-sm size-cell">{{ item.size }}</td>
+          <td class="status-cell">
+            {% if item.progress is not none %}
+              {% if item.progress < 0 %}
+              <div class="progress indeterminate"><span style="width:100%">…</span></div>
+              {% else %}
+              <div class="progress"><span style="width: {{ item.progress }}%">{{ item.progress }}%</span></div>
+              {% endif %}
+            {% elif item.cached %}
+              <span class="badge badge-ok">Ready</span>
+            {% else %}
+              <span class="badge badge-err">Missing</span>
+            {% endif %}
+          </td>
+          <td class="actions">
+            <a href="{{ url_for('admin.edit_view', index=loop.index0) }}" class="btn btn-amber btn-sm">Edit</a>
+            <form method="POST" action="{{ url_for('admin.delete_file', index=loop.index0) }}" style="display:inline;"
+                  onsubmit="return confirm('Remove this file from the list?');">
+              <button type="submit" class="btn btn-red btn-sm">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4" class="empty">No files configured.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="btn-row" style="justify-content:flex-end; margin-top:1rem;">
+      <form method="POST" action="{{ url_for('admin.refresh') }}">
+        <button type="submit" class="btn btn-primary btn-sm">Force refresh</button>
+      </form>
+    </div>
+
+  </div>
+
+  {# ---------- add a file (tabbed) ---------- #}
+  <div class="panel">
+    <h2>Add A File</h2>
+    <div class="tabs" role="tablist">
+      <button class="tab active" type="button" data-tab="csa">From CSA Tools</button>
+      <button class="tab" type="button" data-tab="url">From URL</button>
+      <button class="tab" type="button" data-tab="local">From Local File</button>
+    </div>
+
+    <div class="tab-pane active" id="tab-csa">
+      <p class="hint">Pulls Jamie Sinn’s CSA-USB-Tool season list and adds any files not already in your list. Existing entries are left untouched.</p>
+      <form method="POST" action="{{ url_for('admin.get_csa_tools') }}">
+        <button type="submit" class="btn btn-primary">Add new files from CSA Tools list</button>
+      </form>
+    </div>
+
+    <div class="tab-pane" id="tab-url">
+      <form method="POST" action="{{ url_for('admin.add_file') }}">
+        <label for="add-name">Friendly name</label>
+        <input type="text" id="add-name" name="name" required placeholder="e.g. Game Manual">
+        <label for="add-desc">Description</label>
+        <input type="text" id="add-desc" name="description" placeholder="Brief description for users">
+        <label for="add-url">Direct download URL</label>
+        <input type="url" id="add-url" name="url" required placeholder="https://example.com/file.pdf">
+        <label for="add-tags">Tags <span class="hint" style="display:inline;">(comma-separated, optional)</span></label>
+        <input type="text" id="add-tags" name="tags" placeholder="e.g. Vision, Limelight">
+        <button type="submit" class="btn btn-green">Add file &amp; sync</button>
+      </form>
+    </div>
+
+    <div class="tab-pane" id="tab-local">
+      <p class="hint">If a download is blocked, grab the file on a laptop or USB stick and upload it straight into the cache.</p>
+      <form class="inline-form" method="POST" action="{{ url_for('admin.upload_file') }}" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit" class="btn btn-green">Upload</button>
+      </form>
+    </div>
+  </div>
+
+  {# ---------- export ---------- #}
+  <div class="panel accent-up">
+    <h2>Export cached files</h2>
+    <p class="hint">Copy every cached file to another folder — e.g. a mounted USB stick — to hand off the whole set, just like the CSA USB Tool.</p>
+    <form class="inline-form" method="POST" action="{{ url_for('admin.export') }}">
+      <input type="text" name="dest" required placeholder="/media/usb  (destination folder on the Pi)">
+      <button type="submit" class="btn btn-primary">Export Cached Files</button>
+    </form>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Tabs in the "Add A File" panel.
+  document.querySelectorAll('.tabs .tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const id = tab.dataset.tab;
+      document.querySelectorAll('.tabs .tab').forEach(t => t.classList.toggle('active', t === tab));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === 'tab-' + id));
+    });
+  });
+
+  // Quietly poll cache status and update the table cells in place — no
+  // full-page reload, so progress advances without any visible flash.
+  const STATUS_URL = "{{ url_for('admin.cache_status') }}";
+
+  function applyStatus(cell, r) {
+    const downloading = r.progress !== null && r.progress !== undefined;
+    if (downloading && r.progress >= 0) {
+      let bar = cell.querySelector('.progress > span');
+      if (!bar) {
+        cell.innerHTML = '<div class="progress"><span></span></div>';
+        bar = cell.querySelector('.progress > span');
+      }
+      bar.style.width = r.progress + '%';
+      bar.textContent = r.progress + '%';
+    } else if (downloading) {
+      if (!cell.querySelector('.progress.indeterminate')) {
+        cell.innerHTML = '<div class="progress indeterminate"><span style="width:100%">…</span></div>';
+      }
+    } else {
+      const want = r.cached
+        ? '<span class="badge badge-ok">Ready</span>'
+        : '<span class="badge badge-err">Missing</span>';
+      if (cell.innerHTML.trim() !== want) cell.innerHTML = want;
+    }
+  }
+
+  async function poll() {
+    try {
+      const res = await fetch(STATUS_URL, { cache: 'no-store' });
+      if (!res.ok) return;
+      const byName = {};
+      (await res.json()).forEach(r => { byName[r.filename] = r; });
+      document.querySelectorAll('tr[data-filename]').forEach(tr => {
+        const r = byName[tr.dataset.filename];
+        if (!r) return;
+        const sc = tr.querySelector('.status-cell');
+        if (sc) applyStatus(sc, r);
+        const zc = tr.querySelector('.size-cell');
+        if (zc && zc.textContent !== r.size) zc.textContent = r.size;
+      });
+    } catch (e) { /* offline or navigating away; try again next tick */ }
+  }
+
+  setInterval(poll, 3000);
+</script>
+{% endblock %}

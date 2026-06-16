@@ -1,0 +1,236 @@
+[
+    {
+        "name": "NI Game Tools",
+        "description": "Game Tools for FRC - DriverStation",
+        "url": "https://download.ni.com/support/nipkg/products/ni-f/ni-frc-2026-game-tools/26.0/offline/ni-frc-2026-game-tools_26.0.0_offline.iso",
+        "filename": "ni-frc-2026-game-tools_26.0.0_offline.iso",
+        "tags": [
+            "Driver Station"
+        ]
+    },
+    {
+        "name": "NI LabVIEW",
+        "description": "NI LabVIEW Base",
+        "url": "https://download.ni.com/support/nipkg/products/ni-f/ni-frc-2026-base-suite/26.0/offline/ni-frc-2026-base-suite_26.0.0.49157-0+f5_offline.iso",
+        "filename": "ni-frc-2026-base-suite_26.0.0.49157-0+f5_offline.iso",
+        "tags": [
+            "Driver Station"
+        ]
+    },
+    {
+        "name": "NI CompactRIO Driver",
+        "description": "cRIO Driver - Rarely used, but can be helpful for recovering roboRIOs",
+        "url": "https://download.ni.com/support/nipkg/products/ni-c/ni-compactrio-device-drivers/24.0/offline/ni-compactrio-device-drivers_24.0.0.49260-0+f108_offline.iso",
+        "filename": "ni-compactrio-device-drivers_24.0.0.49260-0+f108_offline.iso",
+        "tags": [
+            "Driver Station"
+        ]
+    },
+    {
+        "name": "WPILibInstaller Windows64",
+        "description": "WPILib Installer",
+        "url": "https://packages.wpilib.workers.dev/installer/v2026.2.1/Win64/WPILib_Windows-2026.2.1.iso",
+        "filename": "WPILib_Windows-2026.2.1.iso",
+        "tags": [
+            "WPILib"
+        ]
+    },
+    {
+        "name": "WPILib VS Code",
+        "description": "WPILib Installer can source a specific VSCode version if needed.",
+        "url": "https://update.code.visualstudio.com/1.105.1/win32-x64-archive/stable",
+        "filename": "VSCode-1.105.1-Windows.zip",
+        "tags": [
+            "WPILib"
+        ]
+    },
+    {
+        "name": "CTRE Phoenix",
+        "description": "Phoenix 6 Offline Installer - Contains all data/supporting tools.",
+        "url": "https://github.com/CrossTheRoadElec/Phoenix-Releases/releases/download/v26.1.3/Phoenix-Offline_v26.1.3.exe",
+        "filename": "Phoenix-Offline_v26.1.3.exe",
+        "tags": [
+            "CTRE"
+        ]
+    },
+    {
+        "name": "VH-109 Network Assistant",
+        "description": "Vivid Hosting Network Assitant Tool",
+        "url": "https://4239402461-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FzaDthb1gXvbj84qIfOUE%2Fuploads%2FJH9mvCiIVx33X8PlpHVK%2Fvh_network_assistant.zip?alt=media&token=a461c2fb-7fa0-4023-9264-ebcfeca0561c",
+        "filename": "vh_network_assistant.zip",
+        "tags": [
+            "Field / Network"
+        ]
+    },
+    {
+        "name": "VH-109 Firmware 2.0.1 for pre 1.2.0",
+        "description": "Vivid Hosting Firmware to be used with VH-109 reporting no version (i.e. < 1.2.0)",
+        "url": "https://4239402461-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FzaDthb1gXvbj84qIfOUE%2Fuploads%2FDOB0aVqc7pD50euGhir9%2FVH-109_2.0.1-02062026.img.enc?alt=media&token=e44ae3c3-5c07-48f6-8103-59e26cfe7839",
+        "filename": "VH-109_2.0.1-02062026.img.enc",
+        "tags": [
+            "Field / Network"
+        ]
+    },
+    {
+        "name": "VH-109 Firmware 2.0.1 for 1.2.0+",
+        "description": "Vivid Hosting Firmware to be used with VH-109 reporting versions >= 1.2.0",
+        "url": "https://4239402461-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FzaDthb1gXvbj84qIfOUE%2Fuploads%2FDYZGxAFlpIglmx8C31gq%2FVH-109_2.0.1-02062026.FROM_1_2_X.img.enc?alt=media&token=711cee42-568c-4533-a5f7-712895e1c6a3",
+        "filename": "VH-109_2.0.1-02062026.FROM_1_2_X.img.enc",
+        "tags": [
+            "Field / Network"
+        ]
+    },
+    {
+        "name": "2026 Game Manual",
+        "description": "Season",
+        "url": "https://firstfrc.blob.core.windows.net/frc2026/Manual/2026GameManual.pdf",
+        "filename": "2026GameManual.pdf",
+        "tags": [
+            "Rules"
+        ]
+    },
+    {
+        "name": "Studica Hardware Manager",
+        "description": "Updates and configures all Studica electronics including NavX",
+        "url": "https://dev.studica.com/maven/release/firmware/app/win32/Studica_Hardware_Manager-Setup_1.1.1.exe",
+        "filename": "Studica_Hardware_Manager-Setup_1.1.1.exe",
+        "tags": [
+            "Studica"
+        ]
+    },
+    {
+        "name": "REV Hardware Client v2",
+        "description": "REV Hardware Client version 2",
+        "url": "https://rhc2.revrobotics.com/download/rev-hardware-client-1.0.7-windows-amd64.zip",
+        "filename": "rev-hardware-client2-1.0.7-windows-amd64.zip",
+        "tags": [
+            "REV"
+        ]
+    },
+    {
+        "name": "REVlib LabView API",
+        "description": "REV Library for use with Labview",
+        "url": "https://github.com/REVrobotics/REV-Software-Binaries/releases/download/revlib-2026.0.1/revlib_2026.0.1-0_windows_all.nipkg",
+        "filename": "revlib_2026.0.1-0_windows_all.nipkg",
+        "tags": [
+            "Driver Station"
+        ]
+    },
+    {
+        "name": "REVlib Java/C++ API",
+        "description": "REV Library for use with Java and C++",
+        "url": "https://github.com/REVrobotics/REV-Software-Binaries/releases/download/revlib-2026.0.5/REVLib-offline-v2026.0.5.zip",
+        "filename": "REVLib-offline-v2026.0.5.zip",
+        "tags": [
+            "REV"
+        ]
+    },
+    {
+        "name": "Rev Firmware Releases",
+        "description": "REV Firmware releases for use with RHC2 offline",
+        "url": "https://github.com/REVrobotics/REV-Software-Binaries/releases/download/frc-2026-week-2/frc2026_week2.zip",
+        "filename": "frc2026_week2.zip",
+        "tags": [
+            "REV"
+        ]
+    },
+    {
+        "name": "Limelight Hardware Manager",
+        "description": "Limelight Hardware Manager",
+        "url": "https://downloads.limelightvision.io/software/LimelightHardwareManagerSetup2_0_6.exe",
+        "filename": "LimelightHardwareManagerSetup2_0_6.exe",
+        "tags": [
+            "Vision"
+        ]
+    },
+    {
+        "name": "Limelight USB Drivers",
+        "description": "Compute Module Module Installer.  Provides Windows drivers for Limelight.",
+        "url": "https://github.com/raspberrypi/usbboot/raw/master/win32/rpiboot_setup.exe",
+        "filename": "rpiboot_setup.exe",
+        "tags": [
+            "Vision"
+        ]
+    },
+    {
+        "name": "Balena Etcher Flash Tool v1.19.5",
+        "description": "Flash Tool.  Useful for flashing new images to devices like Limelights.",
+        "url": "https://github.com/balena-io/etcher/releases/download/v1.19.5/balenaEtcher-1.19.5.Setup.exe",
+        "filename": "balenaEtcher-1.19.5.Setup.exe",
+        "tags": [
+            "Vision"
+        ]
+    },
+    {
+        "name": "Limelight OS 2026 for LL 1, 2, 2+",
+        "description": "Limelight OS image for early limelight models",
+        "url": "https://downloads.limelightvision.io/images/limelight2_2026_0.zip",
+        "filename": "limelight2_2026_0.zip",
+        "tags": [
+            "Vision"
+        ]
+    },
+    {
+        "name": "Limelight OS 2026 for LL 3",
+        "description": "Limelight OS image for Limelight 3 models",
+        "url": "https://downloads.limelightvision.io/images/limelight3_2026_0.zip",
+        "filename": "limelight3_2026_0.zip",
+        "tags": [
+            "Vision"
+        ]
+    },
+    {
+        "name": "Limelight OS 2026 for LL 3G",
+        "description": "Limelight OS image for Limelight 3G models",
+        "url": "https://downloads.limelightvision.io/images/limelight3g_2026_0.zip",
+        "filename": "limelight3g_2026_0.zip",
+        "tags": [
+            "Vision"
+        ]
+    },
+    {
+        "name": "Limelight OS 2026 for LL 4",
+        "description": "Limelight OS image for Limelight 4 models",
+        "url": "https://downloads.limelightvision.io/images/limelight4_2026_0.zip",
+        "filename": "limelight4_2026_0.zip",
+        "tags": [
+            "Vision"
+        ]
+    },
+    {
+        "name": "Limelight 2026 AprilTag map v2 Welded Field",
+        "description": "A map of AprilTags for the 2026 game for the Welded Field",
+        "url": "https://downloads.limelightvision.io/models/FRC2026_WELDED.fmap",
+        "filename": "FRC2026_WELDED.fmap",
+        "tags": [
+            "Vision"
+        ]
+    },
+    {
+        "name": "Limelight 2026 AprilTag map v2 AndyMark Field",
+        "description": "A map of AprilTags for the 2026 game for the AndyMark Field",
+        "url": "https://downloads.limelightvision.io/models/FRC2026_ANDYMARK.fmap",
+        "filename": "FRC2026_ANDYMARK.fmap",
+        "tags": [
+            "Vision"
+        ]
+    },
+    {
+        "name": "Thrifty Config",
+        "description": "Configure and control Thrifty Bot hardware",
+        "url": "https://docs.home.thethriftybot.com/software/app/ThriftyConfig%2BSetup%2B2026.0.1.exe",
+        "filename": "ThriftyConfig+Setup+2026.0.1.exe",
+        "tags": [
+            "Thrifty"
+        ]
+    },
+    {
+        "name": "QDash",
+        "description": "A reliable, high-performance, low-footprint dashboard",
+        "url": "https://github.com/QDash-CI/Releases/releases/download/2026.2.0/QDash-Windows-Installer-2026.2.0-amd64-msvc-standard.exe",
+        "filename": "QDash-Windows-Installer-2026.2.0-amd64-msvc-standard.exe",
+        "tags": [
+            "Dashboards"
+        ]
+    }
+]

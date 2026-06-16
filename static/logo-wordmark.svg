@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 372 150" role="img" aria-label="Depot — FRC file cache">
+  <g transform="translate(-201,3) scale(0.85)" stroke-linejoin="round">
+    <g stroke="#00396b" stroke-width="1.2">
+      <polygon points="260,84 300,104 300,138 260,118" fill="#0066B3"/>
+      <polygon points="340,84 300,104 300,138 340,118" fill="#0066B3"/>
+      <polygon points="300,64 340,84 300,104 260,84" fill="#2a92dd"/>
+      <polygon points="340,84 380,104 380,138 340,118" fill="#0066B3"/>
+      <polygon points="420,84 380,104 380,138 420,118" fill="#0066B3"/>
+      <polygon points="380,64 420,84 380,104 340,84" fill="#2a92dd"/>
+    </g>
+    <g stroke="#00497f" stroke-width="1.5" stroke-linecap="round">
+      <line x1="260" y1="101" x2="300" y2="121"/>
+      <line x1="340" y1="101" x2="300" y2="121"/>
+      <line x1="420" y1="101" x2="380" y2="121"/>
+      <line x1="340" y1="101" x2="380" y2="121"/>
+    </g>
+    <g stroke="#8a1016" stroke-width="1.2">
+      <polygon points="300,46 340,66 340,100 300,80" fill="#ED1C24"/>
+      <polygon points="380,46 340,66 340,100 380,80" fill="#ED1C24"/>
+      <polygon points="340,26 380,46 340,66 300,46" fill="#f5565d"/>
+    </g>
+  </g>
+  <text x="176" y="80" font-family="-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="52" font-weight="600" fill="#0066B3" letter-spacing="0.5">Depot</text>
+  <text x="176" y="106" font-family="-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="500" fill="#7e8c99" letter-spacing="2.5">FRC FILE CACHE</text>
+</svg>

@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# wifipi runtime / local state
+config.toml
+system_id.txt
+cache/*
+!cache/.gitkeep
+
+# tooling
+.pytest_cache/
+.coverage

@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "depot",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": [
+        "/c",
+        "set DEPOT_PORT=8080&& .venv\\Scripts\\python.exe -m depot"
+      ],
+      "port": 8080
+    }
+  ]
+}

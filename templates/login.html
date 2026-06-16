@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Admin Login{% endblock %}
+{% block brand_title %}Depot Admin{% endblock %}
+
+{% block content %}
+<div class="login-wrap">
+  <div class="panel accent-id">
+    <h2>Admin Login</h2>
+    <p class="hint">Enter the admin password to manage this Depot.</p>
+    <form method="POST" action="{{ url_for('admin.login', next=request.args.get('next', '')) }}">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" autofocus required>
+      <button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

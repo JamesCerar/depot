@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}System — {{ system_id }}{% endblock %}
+{% block brand_title %}Depot System{% endblock %}
+
+{% block header_extra %}
+  <a class="btn btn-ghost btn-sm" href="{{ url_for('admin.dashboard') }}">Cache</a>
+  {% if auth_enabled %}
+  <form method="POST" action="{{ url_for('admin.logout_view') }}">
+    <button type="submit" class="btn btn-ghost btn-sm">Log out</button>
+  </form>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="page-head">
+    <a class="back-link" href="{{ url_for('admin.dashboard') }}">&larr;</a>
+    <h1>System Settings</h1>
+  </div>
+
+  {% if not auth_enabled %}
+  <div class="panel accent-warn">
+    <p class="hint" style="margin:0;">
+      No admin password is set, so this page is open to anyone on the network.
+      Set <code>[admin] password</code> in <code>config.toml</code> to lock it.
+    </p>
+  </div>
+  {% endif %}
+
+  {# ---------- system identity ---------- #}
+  <div class="panel accent-id">
+    <h2>System identity</h2>
+    <form class="inline-form" method="POST" action="{{ url_for('admin.update_id') }}">
+      <input type="text" name="system_id" value="{{ system_id }}" required placeholder="e.g. Field-1-Blue">
+      <button type="submit" class="btn btn-ghost">Update</button>
+    </form>
+  </div>
+
+  {# ---------- status ---------- #}
+  <div class="panel">
+    <h2>Status</h2>
+    <p class="hint" style="margin:0;">
+      Internet:
+      <strong style="color: {{ '#2b9348' if state.internet_connected else '#ed1c24' }};">
+        {{ 'CONNECTED' if state.internet_connected else 'DISCONNECTED' }}
+      </strong>
+    </p>
+  </div>
+
+  {# ---------- maintenance ---------- #}
+  <div class="panel">
+    <h2>System maintenance</h2>
+    {% if state.update_available %}
+    <p class="hint">⚠️ An update is available on GitHub. Restarting pulls the latest code.</p>
+    {% endif %}
+    <form method="POST" action="{{ url_for('admin.restart') }}"
+          onsubmit="return confirm('Restart the Depot service now?');">
+      <button type="submit" class="btn {{ 'btn-primary' if state.update_available else 'btn-ghost' }}">
+        {{ 'Install update & restart' if state.update_available else 'Restart service' }}
+      </button>
+    </form>
+  </div>
+{% endblock %}

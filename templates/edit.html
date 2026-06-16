@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Edit File — {{ system_id }}{% endblock %}
+{% block brand_title %}Depot Admin{% endblock %}
+
+{% block content %}
+  <div class="page-head">
+    <a class="back-link" href="{{ url_for('admin.dashboard') }}">&larr;</a>
+    <h1>Edit File</h1>
+  </div>
+
+  <div class="panel accent-warn">
+    <h2>Update file configuration</h2>
+    <form method="POST" action="{{ url_for('admin.update_file', index=index) }}">
+      <label for="name">Friendly name</label>
+      <input type="text" id="name" name="name" value="{{ file.name }}" required>
+
+      <label for="description">Description</label>
+      <input type="text" id="description" name="description" value="{{ file.description }}">
+
+      <label for="url">Direct download URL</label>
+      <input type="url" id="url" name="url" value="{{ file.url }}" required>
+
+      <label for="tags">Tags <span class="hint" style="display:inline;">(comma-separated)</span></label>
+      <input type="text" id="tags" name="tags" value="{{ file.tags|join(', ') if file.tags }}" placeholder="e.g. Vision, Limelight">
+
+      <div class="btn-row">
+        <button type="submit" class="btn btn-green">Save changes</button>
+        <a href="{{ url_for('admin.dashboard') }}" class="btn btn-ghost">Cancel</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}
