@@ -72,6 +72,9 @@ docker compose up -d
 Open `http://localhost`. The `cache/` folder and `files.json` are mounted from
 the current directory so data persists between container restarts.
 
+Other devices on the same network can reach it at `http://<your-pc-hostname>.local`
+— mDNS is handled by the host OS, not the container, so no extra setup is needed.
+
 To stop:
 
 ```bash
